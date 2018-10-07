@@ -1,0 +1,77 @@
+﻿@model Treehouse.FitnessFrog.ViewModels.EntriesBaseViewModel
+@using Treehouse.FitnessFrog.Shared.Models
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary("The following errors were found:", new { @class = "alert alert-danger" })
+
+    <div class="row">
+
+        <div class="col-md-6">
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Entry.Date, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Entry.Date, "{0:d}", new { @class = "form-control datepicker" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Entry.ActivityId, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.Entry.ActivityId, 
+                    Model.ActivitiesSelectListItems, "", new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Entry.Duration, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Entry.Duration, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Entry.Intensity, new { @class = "control-label" })
+                <div>
+                    <label class="radio-inline">
+                        @Html.RadioButtonFor(m => m.Entry.Intensity,
+                            Entry.IntensityLevel.Low) @Entry.IntensityLevel.Low
+                    </label>
+                    <label class="radio-inline">
+                        @Html.RadioButtonFor(m => m.Entry.Intensity,
+                            Entry.IntensityLevel.Medium) @Entry.IntensityLevel.Medium
+                    </label>
+                    <label class="radio-inline">
+                        @Html.RadioButtonFor(m => m.Entry.Intensity,
+                            Entry.IntensityLevel.High) @Entry.IntensityLevel.High
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(m => m.Entry.Exclude) @Html.DisplayNameFor(m => m.Entry.Exclude)
+                    </label>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Entry.Notes, new { @class = "control-label" })
+                @Html.TextAreaFor(m => m.Entry.Notes, 14, 20, new { @class = "form-control" })
+            </div>
+
+        </div>
+
+        <div class="col-md-12">
+            <div class="pad-top">
+                <button type="submit" class="btn btn-success btn-lg margin-right">
+                    <span class="glyphicon glyphicon-save"></span> Save
+                </button>
+                <a href="@Url.Action("Index")" class="btn btn-warning btn-lg">
+                    <span class="glyphicon glyphicon-remove"></span> Cancel
+                </a>
+            </div>
+        </div>
+
+    </div>
+}
