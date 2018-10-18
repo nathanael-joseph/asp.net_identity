@@ -11,7 +11,7 @@ namespace Treehouse.FitnessFrog
 {
 	public partial class Startup
 	{
-		private void ConfigueAuth(IAppBuilder app)
+		private void ConfigureAuth(IAppBuilder app)
         {
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {

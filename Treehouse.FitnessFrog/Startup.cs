@@ -11,7 +11,7 @@ namespace Treehouse.FitnessFrog
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigueAuth(app);
+            ConfigureAuth(app);
         }
     }
 }
