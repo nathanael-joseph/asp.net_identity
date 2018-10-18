@@ -7,6 +7,7 @@ using Treehouse.FitnessFrog.Shared.Models;
 using Treehouse.FitnessFrog.ViewModels;
 using Treehouse.FitnessFrog.Shared.Security;
 using Microsoft.Owin.Security;
+using System.Threading.Tasks;
 
 namespace Treehouse.FitnessFrog.Controllers
 {
@@ -33,25 +34,28 @@ namespace Treehouse.FitnessFrog.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(AccountRegisterViewModel viewModel)
+        public async Task<ActionResult> Register(AccountRegisterViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 var user = new User { UserName = viewModel.Email, Email = viewModel.Email };
+                // Create the user
+                var result = await _userManager.CreateAsync(user, viewModel.Password);
+                // If the user was successfully created...
+                if (result.Succeeded)
+                {
+                    // Sign-in the user and redirect them to the web app's "Home" page
+                    await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    return RedirectToAction("Index", "Entries");
+                }
+                // If there were errors...
+                // Add model errors
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error);
+                }
             }
-            // If the ModelState is valid...
-
-            // Instantiate a User object
-
-            // Create the user
-
-            // If the user was successfully created...
-
-            // Sign-in the user and redirect them to the web app's "Home" page
-
-            // If there were errors...
-
-            // Add model errors
+         
             return View(viewModel);
         }
     }
